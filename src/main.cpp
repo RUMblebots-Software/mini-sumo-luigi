@@ -2,6 +2,7 @@
 // Edimar Valentin Kery <edimar.valentin@upr.edu>
 
 #include <Arduino.h>
+#include <SharpIR.h>
 #include <Wire.h> // This library allows to communicate with I2C devices
 #include <L3G.h> // This is a library interfaces with L3GD20H, L3GD20, and L3G4200D gyros on Pololu boards
 
@@ -30,10 +31,22 @@
 
 L3G gyro; // Create the gyro object
 
+
+const long sharp_model = 20150; //Sharp GP2Y0A21YK0F 
+
 // This functions read from the distance sensors and returns a float value representing centimeters
 float getDistance(int sensor){
   return 65 * pow(analogRead(sensor) * 0.0048828125, -1.10);
 }
+
+
+// Sharp GP2Y0A21YK0F Analog Distance Sensors
+SharpIR left_sensor(RIGHT_SENSOR, sharp_model);
+SharpIR left_sensor(RIGHT_SENSOR, sharp_model);
+
+
+
+
 
 //Sets both motors to go forward at x speed
 void forward(int speed){
@@ -192,6 +205,8 @@ void setup() {
 }
 
 void loop() {
+
+
   Serial.print("Right Line Sensor: ");
   Serial.println(analogRead(LEFT_LINE_SENSOR));     
                                                                                                                                                                     
