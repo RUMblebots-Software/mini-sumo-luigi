@@ -1,11 +1,12 @@
 // UPRM RUMblebots Combact Robots Team
 // Edimar Valentin Kery <edimar.valentin@upr.edu>
+// Juan E. Quintana Gonzalez <juan.quintana5@upr.edu>
 
 #include <Arduino.h>
 #include <SharpIR.h>
 #include <Wire.h> // This library allows to communicate with I2C devices
 #include <L3G.h> // This is a library interfaces with L3GD20H, L3GD20, and L3G4200D gyros on Pololu boards
-
+#include <string.h>
 //These are the pins for the TB6612FNG Motor Driver 
 #define STBY 0
 #define PWMA 1
@@ -31,20 +32,15 @@
 
 L3G gyro; // Create the gyro object
 
-
-const long sharp_model = 20150; //Sharp GP2Y0A21YK0F 
-
-// This functions read from the distance sensors and returns a float value representing centimeters
-float getDistance(int sensor){
-  return 65 * pow(analogRead(sensor) * 0.0048828125, -1.10);
-}
-
-
 // Sharp GP2Y0A21YK0F Analog Distance Sensors
-SharpIR left_sensor(RIGHT_SENSOR, sharp_model);
-SharpIR left_sensor(RIGHT_SENSOR, sharp_model);
 
-
+SharpIR left_sensor(SharpIR::GP2Y0A21YK0F, LEFT_SENSOR);
+SharpIR right_sensor(SharpIR::GP2Y0A21YK0F, RIGHT_SENSOR);
+SharpIR ang_right_sensor(SharpIR::GP2Y0A21YK0F, RIGHT_ANGLE_SENSOR);
+SharpIR ang_left_sensor(SharpIR::GP2Y0A21YK0F, LEFT_ANGLE_SENSOR);
+SharpIR front_right_sensor(SharpIR::GP2Y0A21YK0F, RIGHT_FRONT_SENSOR);
+SharpIR front_left_sensor(SharpIR::GP2Y0A21YK0F, LEFT_FRONT_SENSOR);
+SharpIR back_sensor(SharpIR::GP2Y0A21YK0F, BACK_SENSOR);
 
 
 
@@ -82,8 +78,6 @@ void right(int speed, float angle){
   float Current_z_angle = 0.0f;
   unsigned long PrevTime = millis();
       digitalWrite(STBY, HIGH);
-      
-      speed = abs(speed)/2; // Motor1 + Motor 2 = Speed
   
       digitalWrite(AIN1, HIGH);
       digitalWrite(AIN2, LOW);
@@ -109,18 +103,32 @@ void right(int speed, float angle){
       Serial.print("Z angle: ");
       Serial.println(Current_z_angle);
       Serial.print("Angle: ");
-      Serial.println(angle);
+      Serial.println(angle); 
   }
   stopMotors();
 }
-
+//turns right at speed x utnitl it stops detecting something to the right
+void right(int speed){
+      digitalWrite(STBY, HIGH);
+  
+      digitalWrite(AIN1, HIGH);
+      digitalWrite(AIN2, LOW);
+     
+      digitalWrite(BIN1, LOW);
+      digitalWrite(BIN2, HIGH);
+    
+      analogWrite(PWMA, speed);
+      analogWrite(PWMB, speed);
+  
+  while(right_sensor.getDistance() < 10|| ang_right_sensor.getDistance() < 10){
+  }
+  stopMotors();
+}
 //Spins left at x speed and stops a y angle
 void left(int speed, float angle){
   float Current_z_angle = 0.0f;
   unsigned long PrevTime = millis();
-      digitalWrite(STBY, HIGH);
-      
-      speed = abs(speed)/2; // Motor1 + Motor 2 = Speed
+      digitalWrite(STBY, HIGH);; // Motor1 + Motor 2 = Speed
   
       digitalWrite(AIN1, LOW);
       digitalWrite(AIN2, HIGH);
@@ -150,27 +158,43 @@ void left(int speed, float angle){
   }
   stopMotors();
 }
+//turns left at speed x until it stops detecing someting to the left
+void left(int speed) {
+  unsigned long PrevTime = millis();
+      digitalWrite(STBY, HIGH);
+  
+      digitalWrite(AIN1, LOW);
+      digitalWrite(AIN2, HIGH);
+     
+      digitalWrite(BIN1, HIGH);
+      digitalWrite(BIN2, LOW);
+    
+      analogWrite(PWMA, speed);
+      analogWrite(PWMB, speed);
+  
+  while(left_sensor.getDistance() < 10 || ang_left_sensor.getDistance() < 10){
+  }
+  stopMotors();
+}
 
 //Sets motors to go back at x speed
 void reverse(int speed){
   digitalWrite(STBY, HIGH);
   
-  digitalWrite(AIN1, LOW);
-  digitalWrite(AIN2, HIGH);
+  digitalWrite(AIN1, HIGH);
+  digitalWrite(AIN2, LOW);
  
-  digitalWrite(BIN1, LOW);
-  digitalWrite(BIN2, HIGH);
+  digitalWrite(BIN1, HIGH);
+  digitalWrite(BIN2, LOW);
 
   analogWrite(PWMA, speed);
   analogWrite(PWMB, speed);
 }
-
-
 //const float GYRO-DPS-PER-LSB = 0.00875;
 
 void setup() {
-  // put your setup code here, to run once:
-  Serial.begin(38400);
+  // put your setup code here, to run once:38400
+  Serial.begin(9600);
   pinMode(RIGHT_SENSOR, INPUT);
   pinMode(RIGHT_ANGLE_SENSOR, INPUT);
   pinMode(RIGHT_FRONT_SENSOR, INPUT);
@@ -200,14 +224,30 @@ void setup() {
     Serial.println("Failed to autodetect gyro type!");
     while (1);
   }
-
+  
   gyro.enableDefault();
 }
 
 void loop() {
+  
+    if(left_sensor.getDistance() < 10 || ang_left_sensor.getDistance() < 10){
+    left(255);
+  }
 
+  if(right_sensor.getDistance() < 10 || ang_right_sensor.getDistance() < 10){
+    right(255);
+  }
 
-  Serial.print("Right Line Sensor: ");
-  Serial.println(analogRead(LEFT_LINE_SENSOR));     
-                                                                                                                                                                    
+  if (back_sensor.getDistance() < 10 && ((front_left_sensor.getDistance() + front_right_sensor.getDistance()) / 2) > back_sensor.getDistance() + 10) {
+    left(255,180);
+   }
+   while (front_left_sensor.getDistance() < 10 && front_right_sensor.getDistance() < 10)
+   {
+    forward(255);
+    if (analogRead(LEFT_LINE_SENSOR) > 300 || analogRead(RIGHT_LINE_SENSOR) > 300) {
+      right(255,180);
+      break;
+    }
+   }
+   if (back_sensor.getDistance() >= 10 && front_left_sensor.getDistance() >= 10 && front_right_sensor.getDistance() >= 10) stopMotors();
 }
