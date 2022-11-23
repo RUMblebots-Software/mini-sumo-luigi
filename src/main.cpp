@@ -229,25 +229,64 @@ void setup() {
 }
 
 void loop() {
+  // checks before moving 
   
-    if(left_sensor.getDistance() < 10 || ang_left_sensor.getDistance() < 10){
+
+  
+
+
+
+
+
+  // movement of bot in rotations
+
+  if(left_sensor.getDistance() < 10){
     left(255);
   }
 
-  if(right_sensor.getDistance() < 10 || ang_right_sensor.getDistance() < 10){
+  if(right_sensor.getDistance() < 10){
     right(255);
   }
 
-  if (back_sensor.getDistance() < 10 && ((front_left_sensor.getDistance() + front_right_sensor.getDistance()) / 2) > back_sensor.getDistance() + 10) {
+
+
+  // back sensor rotation
+  
+
+  // if (back_sensor.getDistance() < 10 && ((front_left_sensor.getDistance() + front_right_sensor.getDistance()) / 2) > back_sensor.getDistance() + 10) {
+  //   left(255,180);
+  // }
+
+  if (back_sensor.getDistance() < 10 && ((front_left_sensor.getDistance() + front_right_sensor.getDistance()) / 2) > back_sensor.getDistance()) {
     left(255,180);
-   }
-   while (front_left_sensor.getDistance() < 10 && front_right_sensor.getDistance() < 10)
-   {
+  }
+
+
+  // general forward movement
+
+  while (front_left_sensor.getDistance() < 10 && front_right_sensor.getDistance() < 10){
     forward(255);
-    if (analogRead(LEFT_LINE_SENSOR) > 300 || analogRead(RIGHT_LINE_SENSOR) > 300) {
+    if (analogRead(LEFT_LINE_SENSOR) > 500) {
+      left(255,90);
+      break;
+    }
+    if (analogRead(RIGHT_LINE_SENSOR) > 500) {
+      right(255,90);
+      break;
+    }
+    if (analogRead(LEFT_LINE_SENSOR) > 500 && analogRead(RIGHT_LINE_SENSOR) > 500) {
       right(255,180);
       break;
     }
-   }
-   if (back_sensor.getDistance() >= 10 && front_left_sensor.getDistance() >= 10 && front_right_sensor.getDistance() >= 10) stopMotors();
+  }
+  
+
+  // no movement check 
+  if (back_sensor.getDistance() >= 10 && front_left_sensor.getDistance() >= 10 && front_right_sensor.getDistance() >= 10 && ang_right_sensor.getDistance() >= 10 && ang_left_sensor.getDistance() >= 10){
+    stopMotors();
+  } 
+
+
+
+
 }
