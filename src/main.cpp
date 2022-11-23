@@ -42,7 +42,9 @@ SharpIR front_right_sensor(SharpIR::GP2Y0A21YK0F, RIGHT_FRONT_SENSOR);
 SharpIR front_left_sensor(SharpIR::GP2Y0A21YK0F, LEFT_FRONT_SENSOR);
 SharpIR back_sensor(SharpIR::GP2Y0A21YK0F, BACK_SENSOR);
 
-
+// global variables 
+int GENspeed = 255;
+int lineForce = 500;
 
 //Sets both motors to go forward at x speed
 void forward(int speed){
@@ -56,6 +58,32 @@ void forward(int speed){
 
   analogWrite(PWMA, speed);
   analogWrite(PWMB, speed);
+}
+
+void rightForward(int speed) {
+  digitalWrite(STBY, HIGH);
+  
+  digitalWrite(AIN1, LOW);
+  digitalWrite(AIN2, HIGH);
+ 
+  digitalWrite(BIN1, LOW);
+  digitalWrite(BIN2, HIGH);
+
+  analogWrite(PWMA, speed * 0.75);
+  analogWrite(PWMB, speed);
+}
+
+void leftForward(int speed) {
+  digitalWrite(STBY, HIGH);
+  
+  digitalWrite(AIN1, LOW);
+  digitalWrite(AIN2, HIGH);
+ 
+  digitalWrite(BIN1, LOW);
+  digitalWrite(BIN2, HIGH);
+
+  analogWrite(PWMA, speed );
+  analogWrite(PWMB, speed * 0.75);
 }
 
 //Sets motors to stop and shuts down the motor driver. Use this whenever the sumo shouldn't move.
@@ -241,45 +269,76 @@ void loop() {
   // movement of bot in rotations
 
   if(left_sensor.getDistance() < 10){
-    left(255);
+    left(GENspeed);
   }
 
   if(right_sensor.getDistance() < 10){
-    right(255);
+    right(GENspeed);
   }
 
 
 
   // back sensor rotation
-  
-
-  // if (back_sensor.getDistance() < 10 && ((front_left_sensor.getDistance() + front_right_sensor.getDistance()) / 2) > back_sensor.getDistance() + 10) {
-  //   left(255,180);
-  // }
 
   if (back_sensor.getDistance() < 10 && ((front_left_sensor.getDistance() + front_right_sensor.getDistance()) / 2) > back_sensor.getDistance()) {
-    left(255,180);
+    left(GENspeed,180);
   }
 
 
   // general forward movement
-
+  
   while (front_left_sensor.getDistance() < 10 && front_right_sensor.getDistance() < 10){
-    forward(255);
-    if (analogRead(LEFT_LINE_SENSOR) > 500) {
-      left(255,90);
+    forward(GENspeed);
+    if (analogRead(LEFT_LINE_SENSOR) > lineForce) {
+      left(GENspeed,90);
       break;
     }
-    if (analogRead(RIGHT_LINE_SENSOR) > 500) {
-      right(255,90);
+    if (analogRead(RIGHT_LINE_SENSOR) > lineForce) {
+      right(GENspeed,90);
       break;
     }
-    if (analogRead(LEFT_LINE_SENSOR) > 500 && analogRead(RIGHT_LINE_SENSOR) > 500) {
-      right(255,180);
+    if (analogRead(LEFT_LINE_SENSOR) > lineForce && analogRead(RIGHT_LINE_SENSOR) > lineForce) {
+      right(GENspeed,180);
       break;
     }
   }
   
+  // angle right movement
+  while (ang_right_sensor.getDistance() < 10){
+    rightForward(GENspeed);
+    if (analogRead(LEFT_LINE_SENSOR) > lineForce) {
+      left(GENspeed,90);
+      break;
+    }
+    if (analogRead(RIGHT_LINE_SENSOR) > lineForce) {
+      right(GENspeed,90);
+      break;
+    }
+    if (analogRead(LEFT_LINE_SENSOR) > lineForce && analogRead(RIGHT_LINE_SENSOR) > lineForce) {
+      right(GENspeed,180);
+      break;
+    }
+
+  }
+
+
+  // angle left movement
+  while (ang_left_sensor.getDistance() < 10){
+    leftForward(GENspeed);
+    if (analogRead(LEFT_LINE_SENSOR) > lineForce) {
+      left(GENspeed,90);
+      break;
+    }
+    if (analogRead(RIGHT_LINE_SENSOR) > lineForce) {
+      right(GENspeed,90);
+      break;
+    }
+    if (analogRead(LEFT_LINE_SENSOR) > lineForce && analogRead(RIGHT_LINE_SENSOR) > lineForce) {
+      right(GENspeed,180);
+      break;
+    }
+
+  }
 
   // no movement check 
   if (back_sensor.getDistance() >= 10 && front_left_sensor.getDistance() >= 10 && front_right_sensor.getDistance() >= 10 && ang_right_sensor.getDistance() >= 10 && ang_left_sensor.getDistance() >= 10){
