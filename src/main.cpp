@@ -160,7 +160,6 @@ void left(int speed, float angle){
 }
 //turns left at speed x until it stops detecing someting to the left
 void left(int speed) {
-  unsigned long PrevTime = millis();
       digitalWrite(STBY, HIGH);
   
       digitalWrite(AIN1, LOW);
@@ -177,7 +176,37 @@ void left(int speed) {
   stopMotors();
 }
 
-//Sets motors to go back at x speed
+void leftForward(int speed) {
+  digitalWrite(STBY, HIGH);
+  
+  digitalWrite(AIN1, LOW);
+  digitalWrite(AIN2, HIGH);
+ 
+  digitalWrite(BIN1, LOW);
+  digitalWrite(BIN2, HIGH);
+
+  analogWrite(PWMA, speed * 1.20);
+  analogWrite(PWMB, speed * 0.55);
+  while (ang_left_sensor.getDistance() < 10 && analogRead(LEFT_LINE_SENSOR) < 300 && analogRead(RIGHT_LINE_SENSOR) < 300) {
+  }
+  stopMotors();
+}
+void rightForward(int speed) {
+  digitalWrite(STBY, HIGH);
+  
+  digitalWrite(AIN1, LOW);
+  digitalWrite(AIN2, HIGH);
+ 
+  digitalWrite(BIN1, LOW);
+  digitalWrite(BIN2, HIGH);
+
+  analogWrite(PWMA, speed * 0.55);
+  analogWrite(PWMB, speed * 1.20);
+  while (ang_right_sensor.getDistance() < 10 && analogRead(LEFT_LINE_SENSOR) < 300 && analogRead(RIGHT_LINE_SENSOR) < 300) {
+  }
+  stopMotors();
+}
+//Sets motors to go back at x speed a=d b=i 
 void reverse(int speed){
   digitalWrite(STBY, HIGH);
   
@@ -228,26 +257,44 @@ void setup() {
   gyro.enableDefault();
 }
 
+
+int speed = 255;
 void loop() {
-  
-    if(left_sensor.getDistance() < 10 || ang_left_sensor.getDistance() < 10){
-    left(255);
+  int LeftLineReading = analogRead(LEFT_LINE_SENSOR);
+  int RightLineReading = analogRead(RIGHT_LINE_SENSOR);
+    if(left_sensor.getDistance() < 10 && (LeftLineReading < 300 && RightLineReading < 300)){
+    left(speed);
   }
-
-  if(right_sensor.getDistance() < 10 || ang_right_sensor.getDistance() < 10){
-    right(255);
-  }
-
-  if (back_sensor.getDistance() < 10 && ((front_left_sensor.getDistance() + front_right_sensor.getDistance()) / 2) > back_sensor.getDistance() + 10) {
-    left(255,180);
-   }
-   while (front_left_sensor.getDistance() < 10 && front_right_sensor.getDistance() < 10)
-   {
-    forward(255);
-    if (analogRead(LEFT_LINE_SENSOR) > 300 || analogRead(RIGHT_LINE_SENSOR) > 300) {
-      right(255,180);
-      break;
+    while (ang_left_sensor.getDistance() < 10 && (LeftLineReading < 300 && RightLineReading < 300)) {
+      leftForward(speed);
+      if (LeftLineReading > 300 || RightLineReading > 300) {
+        right(speed,180);
+        break;
+      }
     }
+
+  if (right_sensor.getDistance() < 10 && (LeftLineReading < 300 && RightLineReading < 300)){
+    right(speed);  
+  }
+
+  while (ang_right_sensor.getDistance() < 10 && (LeftLineReading < 300 && RightLineReading < 300)) {
+      rightForward(speed);
+      if (LeftLineReading > 300 || RightLineReading > 300) {
+        left(speed,180);
+        break;
+      }
+  }
+
+  if (back_sensor.getDistance() < 10 && ((front_left_sensor.getDistance() + front_right_sensor.getDistance()) / 2) > back_sensor.getDistance() + 10 && (LeftLineReading < 300 && RightLineReading < 300)) {
+    left(speed ,180);
+   }
+   while ((front_left_sensor.getDistance() < 10 && front_right_sensor.getDistance() < 10) && (LeftLineReading < 300 && RightLineReading < 300))
+   {
+    forward(speed);
+      if (LeftLineReading > 300 || RightLineReading > 300) {
+      right(speed,180);
+      break;
+      }
    }
    if (back_sensor.getDistance() >= 10 && front_left_sensor.getDistance() >= 10 && front_right_sensor.getDistance() >= 10) stopMotors();
 }
