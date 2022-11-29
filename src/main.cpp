@@ -262,7 +262,7 @@ int random(int lower, int upper){
 }
 void loop() {
   // random movement
-  while(true){
+  while(left_sensor.getDistance() > 10 && right_sensor.getDistance() > 10 && back_sensor.getDistance() > 10 && front_left_sensor.getDistance() > 10 && front_right_sensor.getDistance() > 10 && ang_right_sensor.getDistance() > 10 && ang_left_sensor.getDistance() > 10){
     forward(GENspeed);
     if (analogRead(LEFT_LINE_SENSOR) > lineForce || analogRead(RIGHT_LINE_SENSOR) > lineForce) {
       int r = random(1,2);
@@ -283,78 +283,78 @@ void loop() {
 
  // movement of bot in rotations
 
-  // if(left_sensor.getDistance() < 10){
-  //   left(GENspeed);
-  // }
+  if(left_sensor.getDistance() < 10){
+    left(GENspeed);
+  }
 
-  // if(right_sensor.getDistance() < 10){
-  //   right(GENspeed);
-  // }
+  if(right_sensor.getDistance() < 10){
+    right(GENspeed);
+  }
 
 
 
   // // back sensor rotation
 
-  // if (back_sensor.getDistance() < 10 && ((front_left_sensor.getDistance() + front_right_sensor.getDistance()) / 2) > back_sensor.getDistance()) {
-  //   left(GENspeed,180);
-  // }
+  if (back_sensor.getDistance() < 10 && ((front_left_sensor.getDistance() + front_right_sensor.getDistance()) / 2) > back_sensor.getDistance()) {
+    left(GENspeed,180);
+  }
 
 
   // // general forward movement
   
-  // while (front_left_sensor.getDistance() < 10 && front_right_sensor.getDistance() < 10){
-  //   forward(GENspeed);
-  //   if (analogRead(LEFT_LINE_SENSOR) > lineForce && analogRead(RIGHT_LINE_SENSOR) > lineForce) {
-  //     right(GENspeed,180);
-  //     break;
-  //   }
-  //   if (analogRead(LEFT_LINE_SENSOR) > lineForce) {
-  //     left(GENspeed,90);
-  //     break;
-  //   }
-  //   if (analogRead(RIGHT_LINE_SENSOR) > lineForce) {
-  //     right(GENspeed,90);
-  //     break;
-  //   }
+  while (front_left_sensor.getDistance() < 10 && front_right_sensor.getDistance() < 10){
+    forward(GENspeed);
+    if (analogRead(LEFT_LINE_SENSOR) > lineForce && analogRead(RIGHT_LINE_SENSOR) > lineForce) {
+      right(GENspeed,180);
+      break;
+    }
+    if (analogRead(LEFT_LINE_SENSOR) > lineForce) {
+      left(GENspeed,90);
+      break;
+    }
+    if (analogRead(RIGHT_LINE_SENSOR) > lineForce) {
+      right(GENspeed,90);
+      break;
+    }
     
-  // }
+  }
   
-  // // angle right movement
-  // while (ang_right_sensor.getDistance() < 10){
-  //   rightForward(GENspeed);
-  //   if (analogRead(LEFT_LINE_SENSOR) > lineForce && analogRead(RIGHT_LINE_SENSOR) > lineForce) {
-  //     right(GENspeed,180);
-  //     break;
-  //   }
-  //   if (analogRead(LEFT_LINE_SENSOR) > lineForce) {
-  //     right(GENspeed,90);
-  //     break;
-  //   }
-  //   if (analogRead(RIGHT_LINE_SENSOR) > lineForce) {
-  //     left(GENspeed,90);
-  //     break;
-  //   }
+  // angle right movement
+  while (ang_right_sensor.getDistance() < 10){
+    rightForward(GENspeed);
+    if (analogRead(LEFT_LINE_SENSOR) > lineForce && analogRead(RIGHT_LINE_SENSOR) > lineForce) {
+      right(GENspeed,180);
+      break;
+    }
+    if (analogRead(LEFT_LINE_SENSOR) > lineForce) {
+      right(GENspeed,90);
+      break;
+    }
+    if (analogRead(RIGHT_LINE_SENSOR) > lineForce) {
+      left(GENspeed,90);
+      break;
+    }
     
 
-  // }
+  }
 
 
-  // // angle left movement
-  // while (ang_left_sensor.getDistance() < 10){
-  //   leftForward(GENspeed);
-  //   if (analogRead(LEFT_LINE_SENSOR) > lineForce && analogRead(RIGHT_LINE_SENSOR) > lineForce) {
-  //     right(GENspeed,180);
-  //     break;
-  //   }
-  //   if (analogRead(LEFT_LINE_SENSOR) > lineForce) {
-  //     right(GENspeed,90);
-  //     break;
-  //   }
-  //   if (analogRead(RIGHT_LINE_SENSOR) > lineForce) {
-  //     left(GENspeed,90);
-  //     break;
-  //   }
-    
+  // angle left movement
+  while (ang_left_sensor.getDistance() < 10){
+    leftForward(GENspeed);
+    if (analogRead(LEFT_LINE_SENSOR) > lineForce && analogRead(RIGHT_LINE_SENSOR) > lineForce) {
+      right(GENspeed,180);
+      break;
+    }
+    if (analogRead(LEFT_LINE_SENSOR) > lineForce) {
+      right(GENspeed,90);
+      break;
+    }
+    if (analogRead(RIGHT_LINE_SENSOR) > lineForce) {
+      left(GENspeed,90);
+      break;
+    }
+  }
 
 
   // no movement check 
