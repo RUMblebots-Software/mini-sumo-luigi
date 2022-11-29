@@ -69,7 +69,7 @@ void rightForward(int speed) {
   digitalWrite(BIN1, LOW);
   digitalWrite(BIN2, HIGH);
 
-  analogWrite(PWMA, speed * 0.75);
+  analogWrite(PWMA, speed * 0.55);
   analogWrite(PWMB, speed);
 }
 
@@ -83,7 +83,7 @@ void leftForward(int speed) {
   digitalWrite(BIN2, HIGH);
 
   analogWrite(PWMA, speed );
-  analogWrite(PWMB, speed * 0.75);
+  analogWrite(PWMB, speed * 0.55);
 }
 
 //Sets motors to stop and shuts down the motor driver. Use this whenever the sumo shouldn't move.
@@ -257,8 +257,9 @@ void setup() {
 }
 
 void loop() {
-  // checks before moving 
-  
+  // random movement
+
+  if(left_sensor.getDistance() > 10 && right_sensor.getDistance() > 10 && back_sensor.getDistance() > 10 && front_left_sensor.getDistance() > 10 && front_right_sensor.getDistance() > 10 && ang_left_sensor.getDistance() > 10 && ang_right_sensor.getDistance() > 10)
 
   
 
@@ -289,6 +290,10 @@ void loop() {
   
   while (front_left_sensor.getDistance() < 10 && front_right_sensor.getDistance() < 10){
     forward(GENspeed);
+    if (analogRead(LEFT_LINE_SENSOR) > lineForce && analogRead(RIGHT_LINE_SENSOR) > lineForce) {
+      right(GENspeed,180);
+      break;
+    }
     if (analogRead(LEFT_LINE_SENSOR) > lineForce) {
       left(GENspeed,90);
       break;
@@ -297,27 +302,25 @@ void loop() {
       right(GENspeed,90);
       break;
     }
-    if (analogRead(LEFT_LINE_SENSOR) > lineForce && analogRead(RIGHT_LINE_SENSOR) > lineForce) {
-      right(GENspeed,180);
-      break;
-    }
+    
   }
   
   // angle right movement
   while (ang_right_sensor.getDistance() < 10){
     rightForward(GENspeed);
-    if (analogRead(LEFT_LINE_SENSOR) > lineForce) {
-      left(GENspeed,90);
-      break;
-    }
-    if (analogRead(RIGHT_LINE_SENSOR) > lineForce) {
-      right(GENspeed,90);
-      break;
-    }
     if (analogRead(LEFT_LINE_SENSOR) > lineForce && analogRead(RIGHT_LINE_SENSOR) > lineForce) {
       right(GENspeed,180);
       break;
     }
+    if (analogRead(LEFT_LINE_SENSOR) > lineForce) {
+      right(GENspeed,90);
+      break;
+    }
+    if (analogRead(RIGHT_LINE_SENSOR) > lineForce) {
+      left(GENspeed,90);
+      break;
+    }
+    
 
   }
 
@@ -325,18 +328,19 @@ void loop() {
   // angle left movement
   while (ang_left_sensor.getDistance() < 10){
     leftForward(GENspeed);
-    if (analogRead(LEFT_LINE_SENSOR) > lineForce) {
-      left(GENspeed,90);
-      break;
-    }
-    if (analogRead(RIGHT_LINE_SENSOR) > lineForce) {
-      right(GENspeed,90);
-      break;
-    }
     if (analogRead(LEFT_LINE_SENSOR) > lineForce && analogRead(RIGHT_LINE_SENSOR) > lineForce) {
       right(GENspeed,180);
       break;
     }
+    if (analogRead(LEFT_LINE_SENSOR) > lineForce) {
+      right(GENspeed,90);
+      break;
+    }
+    if (analogRead(RIGHT_LINE_SENSOR) > lineForce) {
+      left(GENspeed,90);
+      break;
+    }
+    
 
   }
 
