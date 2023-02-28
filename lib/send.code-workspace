@@ -1,0 +1,12 @@
+{
+	"folders": [
+		{
+			"path": "../../send"
+		},
+		{
+			"name": "mini-sumo-luigi",
+			"path": ".."
+		}
+	],
+	"settings": {}
+}
