@@ -7,7 +7,7 @@
 #include <Wire.h> // This library allows to communicate with I2C devices
 #include <L3G.h> // This is a library interfaces with L3GD20H, L3GD20, and L3G4200D gyros on Pololu boards
 #include <string.h>
-//These are the pins for the TB6612FNG Motor Driver 
+// These are the pins for the TB6612FNG Motor Driver 
 #define STBY 0
 #define PWMA 1
 #define PWMB 4
@@ -158,7 +158,7 @@ void left(int speed, float angle){
   }
   stopMotors();
 }
-//turns left at speed x until it stops detecing someting to the left
+// Turns left at speed x until it stops detecing someting to the left
 void left(int speed) {
       digitalWrite(STBY, HIGH);
   
