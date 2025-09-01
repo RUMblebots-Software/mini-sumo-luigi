@@ -10,7 +10,9 @@ class MiniSumo{
     virtual void forward(int speed) = 0;
     virtual void reverse(int speed) = 0;
     virtual void right(int speed) = 0;
+    virtual void right(int speed, float angle) = 0;
     virtual void left(int speed) = 0;
+    virtual void left(int speed, float angle) = 0;
     virtual void rightForward(int speed) = 0;
     virtual void leftForward(int speed) = 0;
     virtual void stopMotors() = 0;

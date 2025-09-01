@@ -60,7 +60,11 @@ class Luigi : public MiniSumo {
 
     void right(int speed) override; 
 
+    void right(int speed, float angle) override;
+
     void left(int speed) override;
+
+    void left(int speed, float angle) override; 
 
     void rightForward(int speed) override;
 
@@ -68,7 +72,7 @@ class Luigi : public MiniSumo {
 
     void stopMotors() override;
 
-    // Luigi unique methods
-    void left(int speed, float angle); 
-    void right(int speed, float angle);
+    /**
+     * TODO: Luigi unique methods/attacks  */ 
+    
 };
