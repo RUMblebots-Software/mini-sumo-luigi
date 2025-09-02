@@ -2,7 +2,7 @@
 // Edimar Valentin Kery <edimar.valentin@upr.edu>
 // Juan E. Quintana Gonzalez <juan.quintana5@upr.edu>
 // OOP & Abstraction refactor: Yadriel Rivera Rodríguez <yadriel.rivera@upr.edu>
-#include "Luigi.h"
+#include "Luigi.hpp"
 SharpIR left_sensor(SharpIR::GP2Y0A21YK0F, LEFT_SENSOR);
 SharpIR right_sensor(SharpIR::GP2Y0A21YK0F, RIGHT_SENSOR);
 SharpIR ang_right_sensor(SharpIR::GP2Y0A21YK0F, RIGHT_ANGLE_SENSOR);

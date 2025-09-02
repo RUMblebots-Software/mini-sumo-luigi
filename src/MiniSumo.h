@@ -1,5 +1,7 @@
 #pragma once
-
+/**
+ * Interface for MiniSumo
+ */
 class MiniSumo{
     public:
 

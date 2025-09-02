@@ -6,10 +6,7 @@
 #include <L3G.h> // This is a library interfaces with L3GD20H, L3GD20, and L3G4200D gyros on Pololu boards
 #include <string.h>
 
-/**
- * NOTE: Decided to include pin and sensor definitions here to avoid the assumption that all 
- *      mini sumos will use the same motor drivers and sensors.
- */
+
 //These are the pins for the TB6612FNG Motor Driver 
 #define STBY 0
 #define PWMA 1
@@ -47,11 +44,11 @@ extern SharpIR front_left_sensor;
 extern SharpIR back_sensor;
 
 
-class Luigi : public MiniSumo {
+class GeneralMiniSumo : public MiniSumo {
     
     public:
 
-    Luigi(){ }
+    GeneralMiniSumo(){ }
 
     //Implement all pure virtual functions from MiniSumo class
     void forward(int speed);
@@ -72,7 +69,6 @@ class Luigi : public MiniSumo {
 
     void stopMotors() override;
 
-    /**
-     * TODO: Luigi unique methods/attacks  */ 
+    
     
 };
