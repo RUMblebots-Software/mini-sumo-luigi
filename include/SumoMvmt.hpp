@@ -1,5 +1,5 @@
 #pragma once
-#include "MiniSumo.h" // Include the MiniSumo base class, which contains all basic MiniSumo methods
+
 #include <Arduino.h>
 #include <SharpIR.h>
 #include <Wire.h> // This library allows to communicate with I2C devices
@@ -7,6 +7,10 @@
 #include <string.h>
 
 
+
+/**
+ * TODO: make the pins and sensors a part of luigi
+ */
 //These are the pins for the TB6612FNG Motor Driver 
 #define STBY 0
 #define PWMA 1
@@ -44,31 +48,28 @@ extern SharpIR front_left_sensor;
 extern SharpIR back_sensor;
 
 
-class GeneralMiniSumo : public MiniSumo {
+class SumoMvmt {
     
     public:
 
-    GeneralMiniSumo(){ }
 
     //Implement all pure virtual functions from MiniSumo class
-    void forward(int speed);
+    void forward(int speed){};
 
-    void reverse(int speed) override; 
+    void reverse(int speed){};
 
-    void right(int speed) override; 
+    void right(int speed){};
 
-    void right(int speed, float angle) override;
+    void right(int speed, float angle) {};
 
-    void left(int speed) override;
+    void left(int speed){};
 
-    void left(int speed, float angle) override; 
+    void left(int speed, float angle) {};
 
-    void rightForward(int speed) override;
+    void rightForward(int speed){};
 
-    void leftForward(int speed) override;
+    void leftForward(int speed){};
 
-    void stopMotors() override;
+    void stopMotors() {};
 
-    
-    
 };

@@ -1,7 +1,7 @@
-#include "MiniSumo.hpp"
+#include "SumoMvmt.hpp"
 
 //Sets both motors to go forward at x speed
-void GeneralMiniSumo::forward(int speed){
+void SumoMvmt::forward(int speed){
 
     digitalWrite(STBY, HIGH);
         
@@ -16,7 +16,7 @@ void GeneralMiniSumo::forward(int speed){
 }
 
 //Sets motors to go back at x speed a=d b=i 
-void GeneralMiniSumo::reverse(int speed){
+void SumoMvmt::reverse(int speed){
     digitalWrite(STBY, HIGH);
 
     digitalWrite(AIN1, HIGH);
@@ -30,7 +30,7 @@ void GeneralMiniSumo::reverse(int speed){
 }
 
 //turns right at speed x utnitl it stops detecting something to the right
-void GeneralMiniSumo::right(int speed)  {
+void SumoMvmt::right(int speed)  {
     digitalWrite(STBY, HIGH);
   
     digitalWrite(AIN1, HIGH);
@@ -48,7 +48,7 @@ void GeneralMiniSumo::right(int speed)  {
 }
 
 //Spins right at x speed and stops a y angle
-void GeneralMiniSumo::right(int speed, float angle){
+void SumoMvmt::right(int speed, float angle){
     float Current_z_angle = 0.0f;
         unsigned long PrevTime = millis();
 
@@ -86,7 +86,7 @@ void GeneralMiniSumo::right(int speed, float angle){
 }
 
 //turns left at speed x until it stops detecing someting to the left
-void GeneralMiniSumo::left(int speed){
+void SumoMvmt::left(int speed){
     digitalWrite(STBY, HIGH);
   
     digitalWrite(AIN1, LOW);
@@ -104,7 +104,7 @@ void GeneralMiniSumo::left(int speed){
 }
 
 //Spins left at x speed and stops a y angle
-void GeneralMiniSumo::left(int speed, float angle){
+void SumoMvmt::left(int speed, float angle){
 
     float Current_z_angle = 0.0f;
     unsigned long PrevTime = millis();
@@ -142,7 +142,7 @@ void GeneralMiniSumo::left(int speed, float angle){
     stopMotors();
 }
 
-void GeneralMiniSumo::rightForward(int speed){
+void SumoMvmt::rightForward(int speed){
 
     digitalWrite(STBY, HIGH);
         
@@ -159,7 +159,7 @@ void GeneralMiniSumo::rightForward(int speed){
     stopMotors();
 }
 
-void GeneralMiniSumo::leftForward(int speed){
+void SumoMvmt::leftForward(int speed){
     digitalWrite(STBY, HIGH);
   
     digitalWrite(AIN1, LOW);
@@ -176,7 +176,7 @@ void GeneralMiniSumo::leftForward(int speed){
 }
 
 //Sets motors to stop and shuts down the motor driver. Use this whenever the sumo shouldn't move.
-void GeneralMiniSumo::stopMotors(){
+void SumoMvmt::stopMotors(){
     digitalWrite(STBY, LOW);
         
     digitalWrite(AIN1, LOW);
