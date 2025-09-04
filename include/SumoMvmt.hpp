@@ -11,28 +11,50 @@
 /**
  * TODO: make the pins and sensors a part of luigi
  */
-//These are the pins for the TB6612FNG Motor Driver 
-#define STBY 0
-#define PWMA 1
-#define PWMB 4
-#define AIN1 3
-#define AIN2 2
-#define BIN1 5
-#define BIN2 6
+//These are the pins for the TB6612FNG Motor Driver
+
+// #define STBY 0
+// #define PWMA 1
+// #define PWMB 4
+// #define AIN1 3
+// #define AIN2 2
+// #define BIN1 5
+// #define BIN2 6
+int* STBY = new int(0);
+int* PWMA = new int(1);
+int* PWMB = new int(4); 
+int* AIN1 = new int(3);
+int* AIN2 = new int(2);
+int* BIN1 = new int(5);
+int* BIN2 = new int(6);
 
 //These are the pins for the Sharp GP2Y0A21YK0F Analog Distance Sensor
-#define RIGHT_SENSOR A6
-#define RIGHT_ANGLE_SENSOR A7
-#define RIGHT_FRONT_SENSOR A3
-#define LEFT_FRONT_SENSOR A2
-#define LEFT_ANGLE_SENSOR A0
-#define LEFT_SENSOR A1
-#define BACK_SENSOR A10
+
+//#define RIGHT_SENSOR A6
+// #define RIGHT_ANGLE_SENSOR A7
+//#define RIGHT_FRONT_SENSOR A3
+//#define LEFT_FRONT_SENSOR A2
+// #define LEFT_ANGLE_SENSOR A0
+// #define LEFT_SENSOR A1
+// #define BACK_SENSOR A10
+
+auto* RIGHT_SENSOR = new uint8_t(A6);
+auto* RIGHT_ANGLE_SENSOR = new uint8_t(A7);
+auto* RIGHT_FRONT_SENSOR = new uint8_t(A3);
+
+auto* LEFT_FRONT_SENSOR = new uint8_t(A2);
+auto* LEFT_ANGLE_SENSOR = new uint8_t(A0);
+auto* LEFT_SENSOR = new uint8_t(A1);
+
+auto* BACK_SENSOR = new uint8_t(A10);
 
 //These are the pins for the Dual Micro Line Sensor ML2
-#define RIGHT_LINE_SENSOR A8
-#define LEFT_LINE_SENSOR A11
-#define BACK_LINE_SENSOR A9
+// #define RIGHT_LINE_SENSOR A8
+// #define LEFT_LINE_SENSOR A11
+// #define BACK_LINE_SENSOR A9
+auto* RIGHT_LINE_SENSOR = new uint8_t(A8);
+auto* LEFT_LINE_SENSOR = new uint8_t(A11);
+auto* BACK_LINE_SENSOR = new uint8_t(A9);
 
 
 //extern declares the variable without defining it, preventing multiple definitions across files

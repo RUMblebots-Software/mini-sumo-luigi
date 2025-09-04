@@ -3,13 +3,13 @@
 // Juan E. Quintana Gonzalez <juan.quintana5@upr.edu>
 // OOP & Abstraction refactor: Yadriel Rivera Rodríguez <yadriel.rivera@upr.edu>
 #include "Luigi.hpp"
-SharpIR left_sensor(SharpIR::GP2Y0A21YK0F, LEFT_SENSOR);
-SharpIR right_sensor(SharpIR::GP2Y0A21YK0F, RIGHT_SENSOR);
-SharpIR ang_right_sensor(SharpIR::GP2Y0A21YK0F, RIGHT_ANGLE_SENSOR);
-SharpIR ang_left_sensor(SharpIR::GP2Y0A21YK0F, LEFT_ANGLE_SENSOR);
-SharpIR front_right_sensor(SharpIR::GP2Y0A21YK0F, RIGHT_FRONT_SENSOR);
-SharpIR front_left_sensor(SharpIR::GP2Y0A21YK0F, LEFT_FRONT_SENSOR);
-SharpIR back_sensor(SharpIR::GP2Y0A21YK0F, BACK_SENSOR);
+SharpIR left_sensor(SharpIR::GP2Y0A21YK0F, *LEFT_SENSOR);
+SharpIR right_sensor(SharpIR::GP2Y0A21YK0F, *RIGHT_SENSOR);
+SharpIR ang_right_sensor(SharpIR::GP2Y0A21YK0F, *RIGHT_ANGLE_SENSOR);
+SharpIR ang_left_sensor(SharpIR::GP2Y0A21YK0F, *LEFT_ANGLE_SENSOR);
+SharpIR front_right_sensor(SharpIR::GP2Y0A21YK0F, *RIGHT_FRONT_SENSOR);
+SharpIR front_left_sensor(SharpIR::GP2Y0A21YK0F, *LEFT_FRONT_SENSOR);
+SharpIR back_sensor(SharpIR::GP2Y0A21YK0F, *BACK_SENSOR);
 
 L3G gyro; // Create the gyro object
 
@@ -18,30 +18,30 @@ L3G gyro; // Create the gyro object
  * TODO: eliminate magic numbers
  */
 
-Luigi *LuigiObj = new Luigi();
+Luigi *LuigiObj = new Luigi(0,1,4,3,2,5,6,A6,A7,A3,A2,A0,A1,A10,A8,A11,A9);
 
 void setup() {
   // put your setup code here, to run once:38400
   Serial.begin(9600);
-  pinMode(RIGHT_SENSOR, INPUT);
-  pinMode(RIGHT_ANGLE_SENSOR, INPUT);
-  pinMode(RIGHT_FRONT_SENSOR, INPUT);
-  pinMode(LEFT_FRONT_SENSOR, INPUT);
-  pinMode(LEFT_ANGLE_SENSOR, INPUT);
-  pinMode(LEFT_SENSOR, INPUT);
-  pinMode(BACK_SENSOR, INPUT);
+  pinMode(*RIGHT_SENSOR, INPUT);
+  pinMode(*RIGHT_ANGLE_SENSOR, INPUT);
+  pinMode(*RIGHT_FRONT_SENSOR, INPUT);
+  pinMode(*LEFT_FRONT_SENSOR, INPUT);
+  pinMode(*LEFT_ANGLE_SENSOR, INPUT);
+  pinMode(*LEFT_SENSOR, INPUT);
+  pinMode(*BACK_SENSOR, INPUT);
 
-  pinMode(RIGHT_LINE_SENSOR, INPUT);
-  pinMode(LEFT_LINE_SENSOR, INPUT);
-  pinMode(BACK_LINE_SENSOR, INPUT);
+  pinMode(*RIGHT_LINE_SENSOR, INPUT);
+  pinMode(*LEFT_LINE_SENSOR, INPUT);
+  pinMode(*BACK_LINE_SENSOR, INPUT);
 
-  pinMode(STBY, OUTPUT);
-  pinMode(PWMA, OUTPUT);
-  pinMode(PWMB, OUTPUT);
-  pinMode(AIN1, OUTPUT);
-  pinMode(AIN2, OUTPUT);
-  pinMode(BIN1, OUTPUT);
-  pinMode(BIN2, OUTPUT);
+  pinMode(*STBY, OUTPUT);
+  pinMode(*PWMA, OUTPUT);
+  pinMode(*PWMB, OUTPUT);
+  pinMode(*AIN1, OUTPUT);
+  pinMode(*AIN2, OUTPUT);
+  pinMode(*BIN1, OUTPUT);
+  pinMode(*BIN2, OUTPUT);
 
   // Start communicating with the SDA (data line) and SCL (clock line) 
   Wire.begin();
@@ -59,8 +59,14 @@ void setup() {
 
 int speed = 255;
 void loop() {
-  int LeftLineReading = analogRead(LEFT_LINE_SENSOR);
-  int RightLineReading = analogRead(RIGHT_LINE_SENSOR);
+  int LeftLineReading = analogRead(*LEFT_LINE_SENSOR);
+  int RightLineReading = analogRead(*RIGHT_LINE_SENSOR);
+
+    while(true){
+      Serial.println("Left angle sensor reading: " + (String)(ang_left_sensor.getDistance()));
+    }
+
+
     if(left_sensor.getDistance() < 10 && (LeftLineReading < 300 && RightLineReading < 300)){
     LuigiObj->left(speed);
   }
