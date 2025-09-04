@@ -62,10 +62,6 @@ void loop() {
   int LeftLineReading = analogRead(*LEFT_LINE_SENSOR);
   int RightLineReading = analogRead(*RIGHT_LINE_SENSOR);
 
-    while(true){
-      Serial.println("Left angle sensor reading: " + (String)(ang_left_sensor.getDistance()));
-    }
-
 
     if(left_sensor.getDistance() < 10 && (LeftLineReading < 300 && RightLineReading < 300)){
     LuigiObj->left(speed);
