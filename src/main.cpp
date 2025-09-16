@@ -18,7 +18,7 @@ L3G gyro; // Create the gyro object
  * TODO: eliminate magic numbers
  */
 
-Luigi *LuigiObj = new Luigi(0,1,4,3,2,5,6,A6,A7,A3,A2,A0,A1,A10,A8,A11,A9);
+Luigi *LuigiObj = new Luigi(0,1,4,3,2,5,6,A7,A8,A2,A1,A11,A9,A6,A10,A0,A3);
 
 void setup() {
   // put your setup code here, to run once:38400
@@ -62,6 +62,7 @@ void loop() {
   int LeftLineReading = analogRead(*LEFT_LINE_SENSOR);
   int RightLineReading = analogRead(*RIGHT_LINE_SENSOR);
 
+  
 
     if(left_sensor.getDistance() < 10 && (LeftLineReading < 300 && RightLineReading < 300)){
     LuigiObj->left(speed);
