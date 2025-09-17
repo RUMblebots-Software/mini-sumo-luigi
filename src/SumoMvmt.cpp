@@ -1,5 +1,44 @@
 #include "SumoMvmt.hpp"
 
+
+/** NOTE: these values are merely placeholders, the real values are given at the construction of the MiniSumo object */ 
+//These are the pins for the TB6612FNG Motor Driver
+int* STBY = new int(0);
+int* PWMA = new int(1);
+int* PWMB = new int(4); 
+int* AIN1 = new int(3);
+int* AIN2 = new int(2);
+int* BIN1 = new int(5);
+int* BIN2 = new int(6);
+
+//These are the pins for the Sharp GP2Y0A21YK0F Analog Distance Sensor
+
+//#define RIGHT_SENSOR A6
+// #define RIGHT_ANGLE_SENSOR A7
+//#define RIGHT_FRONT_SENSOR A3
+//#define LEFT_FRONT_SENSOR A2
+// #define LEFT_ANGLE_SENSOR A0
+// #define LEFT_SENSOR A1
+// #define BACK_SENSOR A10
+
+uint8_t* RIGHT_SENSOR = new uint8_t(A6);
+uint8_t* RIGHT_ANGLE_SENSOR = new uint8_t(A7);
+uint8_t* RIGHT_FRONT_SENSOR = new uint8_t(A3);
+
+uint8_t* LEFT_FRONT_SENSOR = new uint8_t(A2);
+uint8_t* LEFT_ANGLE_SENSOR = new uint8_t(A0);
+uint8_t* LEFT_SENSOR = new uint8_t(A1);
+
+uint8_t* BACK_SENSOR = new uint8_t(A10);
+
+//These are the pins for the Dual Micro Line Sensor ML2
+// #define RIGHT_LINE_SENSOR A8
+// #define LEFT_LINE_SENSOR A11
+// #define BACK_LINE_SENSOR A9
+uint8_t* RIGHT_LINE_SENSOR = new uint8_t(A8);
+uint8_t* LEFT_LINE_SENSOR = new uint8_t(A11);
+uint8_t* BACK_LINE_SENSOR = new uint8_t(A9);
+
 //Sets both motors to go forward at x speed
 void SumoMvmt::forward(int speed){
 

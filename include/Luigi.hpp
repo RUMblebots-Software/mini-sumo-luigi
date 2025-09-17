@@ -55,6 +55,7 @@ class Luigi : public SumoMvmt {
         *LEFT_LINE_SENSOR = LEFT_LINE_SENSORpin;
         *BACK_LINE_SENSOR = BACK_LINE_SENSORpin;
     }
+    
     /**
      * TODO: Implement the Luigi specific behaviors and his pins
      */
