@@ -63,15 +63,7 @@ void loop() {
   int LeftLineReading = analogRead(*LEFT_LINE_SENSOR);
   int RightLineReading = analogRead(*RIGHT_LINE_SENSOR);
   Luigi *LuigiObj = new Luigi(0,1,4,3,2,5,6,A7,A8,A2,A1,A11,A9,A6,A10,A0,A3);
-  while(true){
-    
-    Serial.println("FORWARD");
-    LuigiObj->forward(speed) ;
-    delay(2000);
-
-
-    
-  }
+  
 
     if(left_sensor.getDistance() < 10 && (LeftLineReading < 300 && RightLineReading < 300)){
     LuigiObj->left(speed);
