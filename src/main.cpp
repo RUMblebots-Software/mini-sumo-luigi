@@ -68,6 +68,8 @@ void loop() {
     Serial.println("FORWARD");
     LuigiObj->forward(speed) ;
     delay(2000);
+
+
     
   }
 
