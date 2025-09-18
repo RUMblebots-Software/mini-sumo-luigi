@@ -2,7 +2,7 @@
 // Edimar Valentin Kery <edimar.valentin@upr.edu>
 // Juan E. Quintana Gonzalez <juan.quintana5@upr.edu>
 // OOP & Abstraction refactor: Yadriel Rivera Rodríguez <yadriel.rivera@upr.edu>
-#include "Luigi.hpp"
+#include "Luigi.h"
 SharpIR left_sensor(SharpIR::GP2Y0A21YK0F, *LEFT_SENSOR);
 SharpIR right_sensor(SharpIR::GP2Y0A21YK0F, *RIGHT_SENSOR);
 SharpIR ang_right_sensor(SharpIR::GP2Y0A21YK0F, *RIGHT_ANGLE_SENSOR);
@@ -62,7 +62,8 @@ int speed = 255;
 void loop() {
   int LeftLineReading = analogRead(*LEFT_LINE_SENSOR);
   int RightLineReading = analogRead(*RIGHT_LINE_SENSOR);
-  Luigi *LuigiObj = new Luigi(0,1,4,3,2,5,6,A7,A8,A2,A1,A11,A9,A6,A10,A0,A3);
+  
+  while(true) LuigiObj->forward(speed);
   
 
     if(left_sensor.getDistance() < 10 && (LeftLineReading < 300 && RightLineReading < 300)){

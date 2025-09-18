@@ -1,5 +1,5 @@
 #pragma once
-#include "SumoMvmt.hpp"
+#include "SumoMvmt.cpp"
 
 class Luigi : public SumoMvmt {
 

@@ -1,4 +1,4 @@
-#include "SumoMvmt.hpp"
+#include "SumoMvmt.h"
 
 
 /** NOTE: these values are merely placeholders, the real values are given at the construction of the MiniSumo object */ 
@@ -13,13 +13,6 @@ int* BIN2 = new int(6);
 
 //These are the pins for the Sharp GP2Y0A21YK0F Analog Distance Sensor
 
-//#define RIGHT_SENSOR A6
-// #define RIGHT_ANGLE_SENSOR A7
-//#define RIGHT_FRONT_SENSOR A3
-//#define LEFT_FRONT_SENSOR A2
-// #define LEFT_ANGLE_SENSOR A0
-// #define LEFT_SENSOR A1
-// #define BACK_SENSOR A10
 
 uint8_t* RIGHT_SENSOR = new uint8_t(A6);
 uint8_t* RIGHT_ANGLE_SENSOR = new uint8_t(A7);
@@ -32,9 +25,7 @@ uint8_t* LEFT_SENSOR = new uint8_t(A1);
 uint8_t* BACK_SENSOR = new uint8_t(A10);
 
 //These are the pins for the Dual Micro Line Sensor ML2
-// #define RIGHT_LINE_SENSOR A8
-// #define LEFT_LINE_SENSOR A11
-// #define BACK_LINE_SENSOR A9
+
 uint8_t* RIGHT_LINE_SENSOR = new uint8_t(A8);
 uint8_t* LEFT_LINE_SENSOR = new uint8_t(A11);
 uint8_t* BACK_LINE_SENSOR = new uint8_t(A9);
