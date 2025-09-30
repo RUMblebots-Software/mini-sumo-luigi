@@ -30,6 +30,10 @@ uint8_t* RIGHT_LINE_SENSOR = new uint8_t(A8);
 uint8_t* LEFT_LINE_SENSOR = new uint8_t(A11);
 uint8_t* BACK_LINE_SENSOR = new uint8_t(A9);
 
+enum SensorConstants{
+    IR_MIN_DIST = 10,
+    WHITE_LINE_LIMIT = 300,
+};
 //Sets both motors to go forward at x speed
 void SumoMvmt::forward(int speed){
 
@@ -72,7 +76,7 @@ void SumoMvmt::right(int speed)  {
     analogWrite(*PWMA, speed);
     analogWrite(*PWMB, speed);
 
-    while(right_sensor.getDistance() < 10|| ang_right_sensor.getDistance() < 10){
+    while(right_sensor.getDistance() < IR_MIN_DIST || ang_right_sensor.getDistance() < IR_MIN_DIST){
     }
     stopMotors();
 }
@@ -128,7 +132,7 @@ void SumoMvmt::left(int speed){
     analogWrite(*PWMA, speed);
     analogWrite(*PWMB, speed);
 
-    while(left_sensor.getDistance() < 10 || ang_left_sensor.getDistance() < 10){
+    while(left_sensor.getDistance() < IR_MIN_DIST || ang_left_sensor.getDistance() < IR_MIN_DIST){
     }
     stopMotors();
 }
@@ -184,7 +188,7 @@ void SumoMvmt::rightForward(int speed){
 
     analogWrite(*PWMA, speed * 0.55);
     analogWrite(*PWMB, speed * 1.20);
-    while (ang_right_sensor.getDistance() < 10 && analogRead(*LEFT_LINE_SENSOR) < 300 && analogRead(*RIGHT_LINE_SENSOR) < 300) {
+    while (ang_right_sensor.getDistance() < IR_MIN_DIST && analogRead(*LEFT_LINE_SENSOR) < WHITE_LINE_LIMIT && analogRead(*RIGHT_LINE_SENSOR) < WHITE_LINE_LIMIT) {
     }
     stopMotors();
 }
@@ -200,7 +204,7 @@ void SumoMvmt::leftForward(int speed){
 
     analogWrite(*PWMA, speed * 1.20);
     analogWrite(*PWMB, speed * 0.55);
-    while (ang_left_sensor.getDistance() < 10 && analogRead(*LEFT_LINE_SENSOR) < 300 && analogRead(*RIGHT_LINE_SENSOR) < 300) {
+    while (ang_left_sensor.getDistance() < IR_MIN_DIST && analogRead(*LEFT_LINE_SENSOR) < WHITE_LINE_LIMIT && analogRead(*RIGHT_LINE_SENSOR) < WHITE_LINE_LIMIT) {
     }
     stopMotors();
 }

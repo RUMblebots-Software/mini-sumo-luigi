@@ -62,9 +62,7 @@ int speed = 255;
 void loop() {
   int LeftLineReading = analogRead(*LEFT_LINE_SENSOR);
   int RightLineReading = analogRead(*RIGHT_LINE_SENSOR);
-  
-  while(true) LuigiObj->forward(speed);
-  
+    
 
     if(left_sensor.getDistance() < 10 && (LeftLineReading < 300 && RightLineReading < 300)){
     LuigiObj->left(speed);
